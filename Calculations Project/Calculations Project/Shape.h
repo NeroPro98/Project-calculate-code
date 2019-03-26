@@ -1,3 +1,6 @@
+#ifndef SHAPE_INCLUDE_H
+#define SHAPE_INCLUDE_H
+
 #pragma once
 #include <windows.h>		// Header File For Windows
 #include <gl.h>			// Header File For The OpenGL32 Library
@@ -8,9 +11,9 @@
 
 
 
+
 //#include <math3d.h>
 #include "math3d.h"
-
 
 #include "Collision_Data.h"
 
@@ -38,8 +41,26 @@ protected:
 
 
 public:
-	Shapes();
-	Shapes(float Coordinates1, float Coordinates2, float Coordinates3, float Color1, float Color2, float Color3);
+	Shapes(){
+		this->Coordinates1 = 0;
+		this->Coordinates2 = 0;
+		this->Coordinates3 = 0;
+		this->Color1 = 0.0f;
+		this->Color2 = 0.0f;
+		this->Color3 = 0.0f;
+		this->Accelerates = 0.0f;
+		this->Mass = 0.0f;
+		this->Time = 0.0f;
+		this->Speed = 0.0f;
+	}
+	Shapes(float Coordinates1, float Coordinates2, float Coordinates3, float Color1, float Color2, float Color3){
+		this->Coordinates1 = Coordinates1;
+		this->Coordinates2 = Coordinates2;
+		this->Coordinates3 = Coordinates3;
+		this->Color1 = Color1;
+		this->Color2 = Color2;
+		this->Color3 = Color3;
+	}
 
 
 	//TODO:To draw 2D shapes
@@ -57,37 +78,6 @@ public:
 
 };
 
-
-//TODO:The Default Constructor of Shapes
-Shapes::Shapes() {
-	this->Coordinates1 = 0;
-	this->Coordinates2 = 0;
-	this->Coordinates3 = 0;
-	this->Color1 = 0.0f;
-	this->Color2 = 0.0f;
-	this->Color3 = 0.0f;
-	this->Accelerates = 0.0f;
-	this->Mass = 0.0f;
-	this->Time = 0.0f;
-	this->Speed = 0.0f;
-
-}
-
-//TODO:The  Constructor By Value of Shapes
-Shapes::Shapes(float Coordinates1, float Coordinates2, float Coordinates3, float Color1, float Color2, float Color3) {
-	this->Coordinates1 = Coordinates1;
-	this->Coordinates2 = Coordinates2;
-	this->Coordinates3 = Coordinates3;
-	this->Color1 = Color1;
-	this->Color2 = Color2;
-	this->Color3 = Color3;
-}
-
-
-
-
-
-//TODO:Class for Draw Quad
 class Quad : public Shapes {
 
 private:
@@ -95,8 +85,26 @@ private:
 
 public:
 
-	Quad();
-	Quad(float H, float L, float W, float Color1, float Color2, float Color3, int NumRib);
+	Quad(){
+		this->Coordinates1 = 0;
+		this->Coordinates2 = 0;
+		this->Coordinates3 = 0;
+		Color1 = 1.0f;
+		Color2 = 1.0f;
+		Color3 = 1.0f;
+		NumRib = 0;
+	}
+	Quad(float H, float L, float W, float C1, float C2, float C3, int NumRib){
+
+		this->Coordinates1 = H;
+		this->Coordinates2 = L;
+		this->Coordinates3 = W;
+		Color1 = C1;
+		Color2 = C2;
+		Color3 = C3;
+		NumRib = NumRib;
+
+	}
 
 
 
@@ -138,34 +146,6 @@ public:
 
 };
 
-//TODO:The Defulet Constructor of Quad
-Quad::Quad() {
-
-	this->Coordinates1 = 0;
-	this->Coordinates2 = 0;
-	this->Coordinates3 = 0;
-	Color1 = 1.0f;
-	Color2 = 1.0f;
-	Color3 = 1.0f;
-	NumRib = 0;
-
-}
-
-
-//TODO:The  Constructor By Value of Quad
-Quad::Quad(float H, float L, float W, float C1, float C2, float C3, int N) {
-
-
-	this->Coordinates1 = H;
-	this->Coordinates2 = L;
-	this->Coordinates3 = W;
-	Color1 = C1;
-	Color2 = C2;
-	Color3 = C3;
-	NumRib = N;
-
-
-}
 
 
 
@@ -181,8 +161,39 @@ private:
 	Vector3f Center ;
 
 public:
-	Shpere();
-	Shpere(GLUquadric *quadric, int x, int y, int z, float C1, float C2, float C3, float S, float T, float A, float M,Vector3f c);
+	Shpere(){
+		this->Coordinates1 = 0;
+		this->Coordinates2 = 0;
+		this->Coordinates3 = 0;
+		Radius = 4;
+		Longitudes = 32;
+		Latitudes = 32;
+		Color1 = 1;
+		Color2 = 1;
+		Color3 = 1;
+		quadric1 = gluNewQuadric();
+		Center = 0;
+	}
+	Shpere(GLUquadric *quadric, int x, int y, int z, float C1, float C2, float C3, float S, float T, float A, float M,Vector3f c){
+		Coordinates1 = 0;
+		Coordinates2 = 0;
+		Coordinates3 = 0;
+		Color1 = C1;
+		Color2 = C2;
+		Color3 = C3;
+		Radius = x;
+		Longitudes = y;
+		Latitudes = z;
+		quadric1 = quadric;
+		Accelerates = A;
+		Speed = S;
+		Mass = M;
+		Time = T;
+		//Center[0] = c[0];
+		//Center[1] = c[1];
+		//Center[2] = c[2];
+		Center = c;
+	}
 	
 	void Draw_Shpere() {
 
@@ -243,44 +254,10 @@ public:
 };
 
 //TODO: The Defult Constructor 
-Shpere::Shpere() {
 
-	this->Coordinates1 = 0;
-	this->Coordinates2 = 0;
-	this->Coordinates3 = 0;
-	Radius = 4;
-	Longitudes = 32;
-	Latitudes = 32;
-	Color1 = 1;
-	Color2 = 1;
-	Color3 = 1;
-	quadric1 = gluNewQuadric();
-	Center = 0;
-
-}
 
 //TODO: The Constructor With Value
-Shpere::Shpere(GLUquadric *quadric, int x, int y, int z, float C1, float C2, float C3, float S, float T, float A, float M, Vector3f c) {
 
-	Coordinates1 = 0;
-	Coordinates2 = 0;
-	Coordinates3 = 0;
-	Color1 = C1;
-	Color2 = C2;
-	Color3 = C3;
-	Radius = x;
-	Longitudes = y;
-	Latitudes = z;
-	quadric1 = quadric;
-	Accelerates = A;
-	Speed = S;
-	Mass = M;
-	Time = T;
-	//Center[0] = c[0];
-	//Center[1] = c[1];
-	//Center[2] = c[2];
-	Center = c;
-}
 
 
 class Cube : public Shapes {
@@ -294,8 +271,28 @@ private:
 	int Latitudes;
 
 public:
-	Cube();
-	Cube(GLUquadric *quadric, float r1, float r2, float h, int L1, int L2, float C1, float C2, float C3);
+	Cube(){
+		quadric1 = gluNewQuadric();
+		RadiusBase = 2;
+		RadiusTop = 2;
+		Height = 2;
+		Longitudes = 32;
+		Latitudes = 32;
+		Color1 = 1;
+		Color2 = 1;
+		Color3 = 1;
+	}
+	Cube(GLUquadric *quadric, float r1, float r2, float h, int L1, int L2, float C1, float C2, float C3){
+		quadric1 = quadric;
+		RadiusBase = r1;
+		RadiusTop = r2;
+		Height = h;
+		Longitudes = L1;
+		Latitudes = L2;
+		Color1 = C1;
+		Color2 = C2;
+		Color3 = C3;
+	}
 
 
 
@@ -334,29 +331,8 @@ public:
 };
 
 //TODO:The Defulte Constructor of Cube
-Cube::Cube() {
-	quadric1 = gluNewQuadric();
-	RadiusBase = 2;
-	RadiusTop = 2;
-	Height = 2;
-	Longitudes = 32;
-	Latitudes = 32;
-	Color1 = 1;
-	Color2 = 1;
-	Color3 = 1;
-
-}
 
 
 //TODO:The  Constructor By Value of Cube
-Cube::Cube(GLUquadric *quadric, float r1, float r2, float h, int L1, int L2, float C1, float C2, float C3) {
-	quadric1 = quadric;
-	RadiusBase = r1;
-	RadiusTop = r2;
-	Height = h;
-	Longitudes = L1;
-	Latitudes = L2;
-	Color1 = C1;
-	Color2 = C2;
-	Color3 = C3;
-}
+
+#endif // !1

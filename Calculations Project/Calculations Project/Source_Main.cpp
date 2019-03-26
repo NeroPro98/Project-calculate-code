@@ -6,13 +6,16 @@
 #include <texture.h>
 
 
-#include <math3d.h>
+//#include <math3d.h>
 #include "Shape.h"
 #include "Collision_Data.h"
 #include "Collision_Shpere.h"
-
-
+#include "AxisAlignBounding_Data.h"
 #include <iostream>
+#include "Plane.h"
+#include "PhysicsEngine.h"
+
+using namespace std;
 
 
 
@@ -207,35 +210,80 @@ GLUquadric *NewQuadric = gluNewQuadric();
 
 
 
-
+//Make a Shpere
 Shpere s1(NewQuadric, 1.0, 32, 32, 0.4, 0.4, 0.4, 5.0, 5.0, 5.0, 5.0, Vector3f(0.0f, 0.0f, 0.0f));
 Shpere s2(NewQuadric, 1.0, 32, 32, 0.4, 0.4, 0.4, 5.0, 5.0, 5.0, 5.0, Vector3f(0.0f, 3.0f, 0.0f));
-Shpere s3(NewQuadric, 1.0, 32, 32, 0.4, 0.4, 0.4, 5.0, 5.0, 5.0, 5.0, Vector3f(0.0f, 0.0f, 10.0f));
+Shpere s3(NewQuadric, 1.0, 32, 32, 0.4, 0.4, 0.4, 5.0, 5.0, 5.0, 5.0, Vector3f(0.0f, 0.0f, 2.0f));
 Shpere s4(NewQuadric, 1.0, 32, 32, 0.4, 0.4, 0.4, 5.0, 5.0, 5.0, 5.0, Vector3f(1.0f, 0.0f, 0.0f));
+Shpere s5(NewQuadric, 1.0, 32, 32, 0.4, 0.4, 0.4, 5.0, 5.0, 5.0, 5.0, Vector3f(0.0f, 0.0f, 0.0f));
+Shpere s6(NewQuadric, 1.0, 32, 32, 0.4, 0.4, 0.4, 5.0, 5.0, 5.0, 5.0, Vector3f(0.0f, 3.0f, 0.0f));
 
 
+Shpere TestShpere1(NewQuadric, 1.0, 32, 32, 0.4, 0.4, 0.4, 5.0, 5.0, 5.0, 5.0, Vector3f(0.0f, 0.0f, 0.0f)); //my test shpere
+Shpere TestShpere2(NewQuadric, 2.0, 32, 32, 0.4, 0.4, 0.4, 5.0, 5.0, 5.0, 5.0, Vector3f(0.0f, 0.0f, 10.0f)); //my test shpere
+//Make a plane
+//Plane plane(Vector3f(0.0f, 1.0f, 0.0f), 0.0f); //the Course plane
+  Plane Myplane(Vector3f(0.0f, -40.0f, 0.0f), 0.0f); // my test plane
+
+//Intilize Data for Collision_Shpere
 Collision_Data c1(0.0f, false);
 Collision_Data c2(0.0f, false);
 Collision_Data c3(0.0f,false);
 
 
 
+
+//Intilize Data for AxisAlignBounding
+Collision_Data ans1(0.0f, false);
+Collision_Data ans2(0.0f, false);
+Collision_Data ans3(0.0f, false);
+Collision_Data ans4(0.0f, false);
+
+
+
+//For print
 bool JustOne = true;
-void JustPrint() {
+bool JustOne2 = true;
 
-	
-
-
-}
-//float A = 0.0f;
 float Acce =0.0f;
 
+
+//To make a Bounding for Shape
+AxisAlignBounding Axis1 = AxisAlignBounding(Vector3f(0.0f, 0.0f, 0.0f), Vector3f(1.0f, 1.0f, 1.0f));
+AxisAlignBounding Axis2 = AxisAlignBounding(Vector3f(1.0f, 1.0f, 1.0f), Vector3f(2.0f, 2.0f, 2.0f));
+AxisAlignBounding Axis3 = AxisAlignBounding(Vector3f(1.0f, 0.0f, 0.0f), Vector3f(2.0f, 1.0f, 1.0f));
+AxisAlignBounding Axis4 = AxisAlignBounding(Vector3f(0.0f, 0.0f, -2.0f), Vector3f(1.0f, 1.0f, -1.0f));
+AxisAlignBounding Axis5 = AxisAlignBounding(Vector3f(0.0f, 0.5f, 0.0f), Vector3f(1.0f, 1.5f, 1.0f));
+
+PhysicsEngine ObjVec;
+
+
+PhysicsObject Object1(Vector3f(0.0f, 0.0f, 0.0f), Vector3f(0.0f, 0.0f, 1.0f),1.0f);
+PhysicsObject Object2(Vector3f(0.0f, 0.0f, 10.0f), Vector3f(0.0f, 0.0f, -1.0f), 2.0f);
+ 
+
+
+double x = 0.0;
 int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 	glTranslated(0,0,-15);
 	Camera();
+	skybox();
+
+	ObjVec.AddObject(Object1);
+	ObjVec.AddObject(Object2);
+
+	Object1.GetShpere().Draw_Shpere();
+	Object2.GetShpere().Draw_Shpere();
+	
+	//To Move the shape
+	Object1.Integrate(0.001f);
+	Object2.Integrate(0.001f);
+
+	//ObjVec.Simulate(20.0f);
+	ObjVec.HandlerCollision();
 
 	//TODO:Objects
 
@@ -243,13 +291,35 @@ int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 	//  Quad q1(1,1,1,0.5,0.5,0.5,4);
      // q1.draw_2D(1,1);
 
-	Collision_Data c1 = s1.Collision(s2);
+	 // To detection the collision Axis Align Bounding
+/*	Collision_Data c1 = s1.Collision(s2);
 	Collision_Data c2 = s1.Collision(s3);
 	Collision_Data c3 = s1.Collision(s4);
+	*/
 
 
+	// To detection the collision Axis Align Bounding
+/* ans1 = Axis1.Is_CollisionAxis(Axis2);
+ ans2 = Axis2.Is_CollisionAxis(Axis3);
+ ans3 = Axis3.Is_CollisionAxis(Axis4);
+ ans4 = Axis2.Is_CollisionAxis(Axis5);
+ */
+
+ // To detection the collision Axis Align Bounding
+	//Vector3f vec = Axis1.GetMaxVectorAxis();
+	//Vector3f vec2 = Axis1.GetMinVectorAxis();
 
 
+	
+	// To detection the collision Axis Align Bounding
+	/*if (JustOne == true) {
+		//JustPrint();
+		std::cout << "The shpere is colliusion ?" << ans1.getisCollision() << "The Distance: " << ans1.getDistance() << "Raduis" << std::endl;
+		std::cout << "The shpere is colliusion ?" << ans2.getisCollision() << "The Distance: " << ans2.getDistance() << std::endl;
+		std::cout << "The shpere is colliusion ?" << ans3.getisCollision() << "The Distance: " << ans3.getDistance() << std::endl;
+		std::cout << "The shpere is colliusion ?" << ans4.getisCollision() << "The Distance: " << ans4.getDistance() << std::endl;
+	}
+	JustOne = false;*/
 
 
 	//Shpere s1(NewQuadric, 2, 32, 32, 0.4, 0.4, 0.4,5,5,5,5);
@@ -263,48 +333,89 @@ int DrawGLScene(GLvoid)									// Here's Where We Do All The Drawing
 
 
 	//        HERE WHERE WE START DRAWING :D
-	skybox();
+	
 
 
-	// to study the collision
-	bool Collision_C1 = c1.getisCollision();
+	// to study the collision 
+/*	bool Collision_C1 = c1.getisCollision();
 	bool Collision_C2 = c2.getisCollision();
 	bool Collision_C3 = c3.getisCollision();
-
-
-	if (JustOne == true) {
+*/
+	// to study the collision 
+	/*if (JustOne == true) {
 		//JustPrint();
 		std::cout << "The shpere is colliusion ?" << c1.getisCollision() << "The Distance: " << c1.getDistance() <<"Raduis"<<s1.getRadius()<<std::endl;
 		std::cout << "The shpere is colliusion ?" << c2.getisCollision() << "The Distance: " << c2.getDistance() << std::endl;
 		std::cout << "The shpere is colliusion ?" << c3.getisCollision() << "The Distance: " << c3.getDistance() << std::endl;
 	}
+	JustOne = false; // to print the previous thing just one time*/
+
+	Collision_Data Test1 = TestShpere1.Collision(TestShpere2);
+	float Dist = Test1.getDistance();
+	//Draw Shpere
+
+/*	if (Test1.getisCollision() == false)
+	{
+		glPushMatrix(); {
+			glTranslated(x, 0, 0);
+	//		TestShpere1.Draw_Shpere();
+			x = x + 0.001;
+		}glPopMatrix();
+	}else{
+
+		glTranslated(-x, 0, 0);
+	//	TestShpere1.Draw_Shpere();
+	}
+
+	glPushMatrix();
+	{
+		//s1.Draw_Shpere();
+	//	s2.Draw_Shpere();
+		//s3.Draw_Shpere();
+		
+	//	TestShpere2.Draw_Shpere();
+		
+	}glPopMatrix();*/
+	
+
+	//To see if the Shpere Collision with plane
+//	Collision_Data Shpere5_Plane = plane.Collision_Shpere_Plane(s5);
+//	Collision_Data Shpere6_Plane = plane.Collision_Shpere_Plane(s6);
+
+/*	if (JustOne == true) {
+		//JustPrint();
+		std::cout << "Plane is collision with Shpere5 ?" << Shpere5_Plane.getisCollision() << "The Distance: " << Shpere5_Plane.getDistance() << "Raduis/;" << s5.getRadius() << std::endl;
+		std::cout << "Plane is collision with Shpere6 ?" << Shpere6_Plane.getisCollision() << "The Distance: " << Shpere6_Plane.getDistance() <<"Raduis:"<<s6.getRadius()<< std::endl;
+		}
 	JustOne = false; // to print the previous thing just one time
 
+	 //To see the status of the object after 20 second
+	Object.Integrate(20.0f);
 
-	//Draw Shpere
-	glPushMatrix();
-	{
-		s1.Draw_Shpere();
-		//s2.Draw_Shpere();
-		//s3.Draw_Shpere();
-		glPopMatrix();
+	Vector3f TestPos = Object.GetPostion();
+	Vector3f TestVel = Object.GetVelocity();
+
+
+	//To Print the Physics State after 20 second
+	if (JustOne2 == true) {
+
+		cout<<"("<<TestPos.GetX()<<","<<TestPos.GetY()<<","<<TestPos.GetZ()<<")"<<endl;
+		cout << "(" << TestVel.GetX() << "," << TestVel.GetY() << "," << TestVel.GetZ() << ")" << endl;
 	}
-	glPushMatrix();
-
-	 
+	JustOne2 = false;*/
 
 	//TODO: to move the shape 
-	glPushMatrix();
-	{
-		if (Collision_C1 == false) {
-			glTranslated(Acce, 0, 0);
-		}
-		s3.Draw_Shpere();
+//	glPushMatrix();
+//	{
+	//	if (Collision_C1 == false) {
+		//	glTranslated(Acce, 0, 0);
+	//	}
+	//	s3.Draw_Shpere();
 		
 
-	}glPopMatrix();
+//	}glPopMatrix();
 	//A = A + 0.01;
-	Acce += s3.Move_Shape(0.02, 0.02, 0.02);
+//	Acce += s3.Move_Shape(0.02, 0.02, 0.02);
 	
 
 	return TRUE;

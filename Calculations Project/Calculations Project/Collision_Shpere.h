@@ -1,5 +1,10 @@
+
+#ifndef COLLISION_SHPERE_H
+#define COLLISION_SHPERE_H
+
 #pragma once
-#include "Shape.h"
+#include "Shape.h"//
+//#include "Collision_Data.h"
 
 Collision_Data Shpere::Collision(Shpere other) {
 
@@ -22,3 +27,5 @@ Collision_Data Shpere::Collision(Shpere other) {
 	}
 		 
 }
+
+#endif // !1
