@@ -11,28 +11,11 @@ private:
 public:
 
 	PhysicsEngineComponent(PhysicsEngine object);
-
 	void Update(float alpha);
-
 	PhysicsEngine GetPhysicsEngine();
-
 
 };
 
-PhysicsEngineComponent::PhysicsEngineComponent(PhysicsEngine object) {
-
-	Object = object;
-}
-
-void PhysicsEngineComponent::Update(float alpha) {
-
-	Object.Simulate(alpha);
-    
-}
-
-PhysicsEngine PhysicsEngineComponent::GetPhysicsEngine() {
-	return Object;
-}
 
 
 

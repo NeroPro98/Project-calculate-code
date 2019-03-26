@@ -12,23 +12,15 @@ protected:
 	
 
 public:
-	Collision_Data(){
-		Distance = 0.0f;
-		isCollision = false;
-	}
-	Collision_Data(float Dis, bool is){
-		Distance = Dis;
-		isCollision = is;
-	}
+	Collision_Data();
+	Collision_Data(float Dis, bool is);
+	bool getisCollision();
+	float getDistance();
 
-	bool getisCollision(){ return isCollision; }
+	void setDistance(float dist);
+	void setISCollision(bool isCol);
+}
 
-
-	float getDistance(){
-		return Distance;
-	}
-
-};
 
 
 

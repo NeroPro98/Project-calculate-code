@@ -30,57 +30,72 @@
     <ClCompile Include="PhysicsEngineComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Collision_Data.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="back.bmp">
-      <Filter>Source Files</Filter>
-    </Image>
-    <Image Include="front.bmp">
-      <Filter>Source Files</Filter>
-    </Image>
     <Image Include="left.bmp">
-      <Filter>Source Files</Filter>
-    </Image>
-    <Image Include="right.bmp">
-      <Filter>Source Files</Filter>
-    </Image>
-    <Image Include="top.bmp">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="SkyBox\grass.bmp">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
     </Image>
     <Image Include="grass.bmp">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="front.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="back.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="right.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="top.bmp">
+      <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Collision_Shpere.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="math3d.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="AxisAlignBounding_Data.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Collision_Data.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AxisAlignBounding_Data.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Plane.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysicsObject.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PhysicsEngine.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision_Shpere.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PhysicsEngineComponent.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Plane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="math3d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Downloads\Compressed\Texture Loader Files\Texture Loader Files\texture.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

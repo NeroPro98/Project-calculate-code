@@ -2,6 +2,7 @@
 #ifndef PhysicsObject_H
 #define PhysicsObject_H
 #include "math3d.h"
+#include "Shape.h"
 
 class PhysicsObject {
    private:
@@ -14,28 +15,14 @@ class PhysicsObject {
 	   PhysicsObject();
 	   PhysicsObject(Vector3f postion, Vector3f velocity,float raduis);
 
-	   Vector3f GetPostion() {
-		   return Postion;
-	   }
+	   Vector3f GetPostion();
 
-	   Vector3f GetVelocity() {
-		   return Velocity;
-	   }
+	   Vector3f GetVelocity();
 
-	   void Integrate(float alpha) {
+	   void Integrate(float alpha);
+	   void SetVelocity(Vector3f vol);
 
-		   Postion += Velocity * alpha;
-
-	   }
-
-	   void SetVelocity(Vector3f vol) {
-		   Velocity = vol;
-	   }
-
-	   float GetRaduis() {
-		   return Raduis;
-	   }
-
+	   float GetRaduis();
 	   Shpere GetShpere() {
 		   GLUquadric *NewQuadric = gluNewQuadric();
 
@@ -46,16 +33,6 @@ class PhysicsObject {
 
 };
 
-PhysicsObject::PhysicsObject() {
-	Postion = 0;
-	Velocity = 0;
-}
-PhysicsObject::PhysicsObject(Vector3f postion, Vector3f velocity,float raduis) {
-
-	Postion = postion;
-	Velocity = velocity;
-	Raduis = raduis;
-}
 
 
 
